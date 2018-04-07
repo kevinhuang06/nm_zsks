@@ -1,12 +1,14 @@
 #coding=utf-8
 
-import os
-from db.batch import Batch
+from university import UniveristyWebPage
 
-batch_order = [u'本科提前A_1',u'本科提前A_2',u'本科提前A_3',u'本科提前B_1',u'本科提前B_2',u'专科提前_1',
-     u'本科一批_1',u'本科一批_2',u'本科一批B_1',u'本科一批B_2',
-     u'本科二批_1',u'本科二批_2',u'本科二批_3',u'本科二批B_1',u'本科二批B_2',u'本科二批B_3',
-     u'专科提前、高职高专_1',u'专科提前、高职高专_2',u'专科提前、高职高专_3']
+
+batch_order_all = [u'本科提前A_1',u'本科提前A_2',u'本科提前A_3',u'本科提前B_1',u'本科提前B_2',u'专科提前_1',
+ u'本科一批_1',u'本科一批_2',u'本科一批B_1',u'本科一批B_2',
+ u'本科二批_1',u'本科二批_2',u'本科二批_3',u'本科二批B_1',u'本科二批B_2',u'本科二批B_3',
+ u'专科提前、高职高专_1',u'专科提前、高职高专_2',u'专科提前、高职高专_3']
+
+batch_order = [u'专科提前、高职高专_1',u'专科提前、高职高专_2',u'专科提前、高职高专_3']
 
 tasks = {
     # 提前批
@@ -211,15 +213,15 @@ tasks = {
         u'采矿类': '../../data/zy_63_73_2017/1_1.html',
     }
 }
+def parse():
+    for bo in batch_order_all:
+        for k, p in tasks[bo].items():
+            wizard = UniveristyWebPage(p)
+            batch_id = wizard.b.batch_id(p)
+            print batch_id
+            wizard.parse_local(p, batch_id)
+            wizard.output_to_db()
 
-filed = ['major_code','batch_code','high_school_major','batch_name','number']
 if __name__ == '__main__':
-    b = Batch()
-    for bo in batch_order:
-        for k,p in tasks[bo].items():
-            data = {}
-            data['high_school_major'] = k
-            data['major_code'] = os.path.basename(p)[:-5]
-            data['batch_code'] = os.path.basename(os.path.dirname(p))
-            data['batch_name'],data['number'] = bo.split('_')
-            b.insert_into_table(data, 'batch')
+    # crawl()
+    parse()

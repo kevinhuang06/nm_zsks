@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p><font size="6" color="red">亲!你可选的大学很多哦！</font></p>
+    <table>
+    <tr>
+      <th>大学</th>
+      <th>最低录取分数</th>
+    </tr>
+    {% for uni_name, min_score in universities_info %}
+        <tr>
+            <td>{{uni_name}}</td>
+            <td>{{min_score}}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>
