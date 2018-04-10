@@ -2,11 +2,19 @@
 
 import MySQLdb
 
+conf_name = 'test'
+from config import app_config
 
 class NmZsks(object):
 
     def __init__(self):
-        self.conn = MySQLdb.connect(host="localhost",user="root",db="zsks", charset='utf8')
+	self.conn = MySQLdb.connect(
+	    host=app_config[conf_name].MYSQL_DATABASE_HOST,
+	    user=app_config[conf_name].MYSQL_DATABASE_USER,
+	    passwd=app_config[conf_name].MYSQL_DATABASE_PASSWORD,
+	    db=app_config[conf_name].MYSQL_DATABASE_DB,
+	    charset='utf8'
+	)
         self.conn.ping(True)
         self.cursor = self.conn.cursor()
 
@@ -29,4 +37,5 @@ class NmZsks(object):
         print sql
         self.cursor.execute(sql)
         self.conn.commit()
-
+if __name__ == '__main__':
+    nm = NmZsks()

@@ -2,14 +2,12 @@
 
 import os
 import MySQLdb
+from zsks import NmZsks
 
-
-class Batch(object):
+class Batch(NmZsks):
 
     def __init__(self):
-        self.conn = MySQLdb.connect(host="localhost",user="root",db="zsks", charset='utf8')
-        self.conn.ping(True)
-        self.cursor = self.conn.cursor()
+        super(Batch, self).__init__()
 
     def __del__(self):
         self.conn.close()

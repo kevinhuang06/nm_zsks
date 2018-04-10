@@ -14,6 +14,7 @@ def homepage():
     """
     Render the homepage template on the / route
     """
+    print 'hello you!'
     return render_template('home/home.html')
 
 
